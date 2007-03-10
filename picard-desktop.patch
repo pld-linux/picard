@@ -1,0 +1,10 @@
+--- picard.desktop.org	2007-03-10 12:32:53.198618198 +0100
++++ picard.desktop	2007-03-10 12:34:15.155115220 +0100
+@@ -2,6 +2,7 @@
+ Encoding=UTF-8
+ Name=MusicBrainz Picard
+ Comment=The next generation MusicBrainz tagger
++Comment[pl]=Znacznik MusicBrainz nowej generacji
+ Exec=picard
+ Terminal=false
+ Type=Application
