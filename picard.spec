@@ -1,5 +1,5 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
-Summary(pl.UTF-8):	Picard, znacznik MusicBrainz nowej generacji
+Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	0.7.2
 Release:	1
@@ -30,8 +30,8 @@ will add Mac OS X support as well.
 %description -l pl.UTF-8
 Projekt o nazwie Picard jest programem nowej generacji do generowania
 znaczników MusicBranz. Picard jest napisany w Pythonie, który jest
-językiem cross-platform - co pozwala uruchamiac ten sam kod na obu
-systemach Windows oraz Linux. Niedługo dodamy wsparcie dla Mac OS X.
+językiem cross-platform - co pozwala uruchamiać ten sam kod zarówno
+pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %prep
 %setup -q
