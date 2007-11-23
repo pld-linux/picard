@@ -9,8 +9,7 @@ Source0:	https://helixcommunity.org/frs/download.php/2252/%{name}-%{version}.tar
 # Source0-md5:	840d2202a792a36fc981fd691c8c49a5
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
-BuildRequires:	python-ctypes
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 Requires:	python-musicbrainz2
