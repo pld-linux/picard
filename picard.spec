@@ -1,17 +1,22 @@
+# TODO:
+# - unpackaged files:
+#   /usr/lib/debug/usr/lib64/python2.6/site-packages/picard/util/astrcmp.so.debug
+#   /usr/src/debug/picard-0.10/picard/util/astrcmp.cpp
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	0.7.2
+Version:	0.10
 Release:	1
 License:	GPL v2
 Group:		Applications
-Source0:	https://helixcommunity.org/frs/download.php/2252/%{name}-%{version}.tar.gz
-# Source0-md5:	840d2202a792a36fc981fd691c8c49a5
+Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
+# Source0-md5:	6d4e31446d3a65cbc6ff880947bb500e
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
+Requires:	python-PyQt4
 Requires:	python-musicbrainz2
 Requires:	python-tunepimp
 Requires:	python-wxPython
@@ -34,18 +39,20 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 
 %build
 find -type f -exec sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g' "{}" ";"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 python ./setup.py install --optimize=2 --root=$RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/%{_pixmapsdir}
-mv $RPM_BUILD_ROOT/%{_iconsdir}/* $RPM_BUILD_ROOT/%{_pixmapsdir}
+
+install %{name}.desktop $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+install %{name}-32.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+
 %py_postclean
 %find_lang %{name}
 
@@ -54,8 +61,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS.txt NEWS.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%{py_sitescriptdir}/picard
+%{py_sitedir}/picard
+%{py_sitedir}/%{name}-%{version}-py*.egg-info
 %{_desktopdir}/%{name}.desktop
-%{_pixmapsdir}/*
+%{_pixmapsdir}/%{name}.png
