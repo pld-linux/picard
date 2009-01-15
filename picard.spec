@@ -5,12 +5,12 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	0.10
+Version:	0.11
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	6d4e31446d3a65cbc6ff880947bb500e
+# Source0-md5:	02ddcff3e201b2cf54f1b52b02d44fad
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	python-devel >= 1:2.5
