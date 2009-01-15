@@ -1,9 +1,8 @@
 diff -burNp picard-0.11/picard.desktop picard-0.11-new/picard.desktop
 --- picard-0.11/picard.desktop	2008-12-01 18:27:05.000000000 +0100
-+++ picard-0.11-new/picard.desktop	2009-01-15 15:26:17.567270167 +0100
-@@ -1,9 +1,11 @@
++++ picard-0.11-new/picard.desktop	2009-01-15 15:41:02.254473346 +0100
+@@ -1,9 +1,10 @@
  [Desktop Entry]
-+Encoding=UTF-8
  Name=MusicBrainz Picard
  Comment=Tag your music with the next generation MusicBrainz tagger
 +Comment[pl]=Znacznik MusicBrainz nowej generacji
@@ -12,6 +11,5 @@ diff -burNp picard-0.11/picard.desktop picard-0.11-new/picard.desktop
  Type=Application
  StartupNotify=true
 -Icon=picard-32
--Categories=AudioVideo;AudioVideoEditing;
 +Icon=picard
-+Categories=Application;AudioVideo;AudioVideoEditing;
+ Categories=AudioVideo;AudioVideoEditing;
