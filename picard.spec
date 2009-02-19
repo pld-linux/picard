@@ -1,13 +1,13 @@
 # TODO:
 # - unpackaged files:
-#   /usr/lib/debug/usr/lib64/python2.6/site-packages/picard/util/astrcmp.so.debug
-#   /usr/src/debug/picard-0.10/picard/util/astrcmp.cpp
+#   /usr/share/icons/picard-16.png
+#   /usr/share/icons/picard-32.png
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	0.11
 Release:	1
-License:	GPL v2
+License:	GPL v2+
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
 # Source0-md5:	02ddcff3e201b2cf54f1b52b02d44fad
@@ -20,7 +20,6 @@ Requires:	python-PyQt4
 Requires:	python-musicbrainz2
 Requires:	python-tunepimp
 Requires:	python-wxPython
-BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,6 +42,7 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %build
 find -type f -exec sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g' "{}" ";"
+python ./setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
