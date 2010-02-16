@@ -13,6 +13,8 @@ Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar
 # Source0-md5:	02ddcff3e201b2cf54f1b52b02d44fad
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
+BuildRequires:	gettext-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -54,7 +56,7 @@ install %{name}.desktop $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 install %{name}-32.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 
 # Scots unsupported by glibc
-rm -r $RPM_BUILD_ROOT/%{_datadir}/localo/sco
+rm -r $RPM_BUILD_ROOT/%{_datadir}/locale/sco
 
 %py_postclean
 %find_lang %{name}
