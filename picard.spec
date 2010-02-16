@@ -6,7 +6,7 @@ Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	0.11
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
@@ -52,6 +52,9 @@ python ./setup.py install --optimize=2 --root=$RPM_BUILD_ROOT
 
 install %{name}.desktop $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 install %{name}-32.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+
+# Scots unsupported by glibc
+rm -r $RPM_BUILD_ROOT/%{_datadir}/localo/sco
 
 %py_postclean
 %find_lang %{name}
