@@ -5,12 +5,12 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	0.11
-Release:	2
+Version:	0.12.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	02ddcff3e201b2cf54f1b52b02d44fad
+# Source0-md5:	cfe594d68924afbc0704888130295c85
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	gettext-devel
@@ -52,14 +52,16 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 python ./setup.py install --optimize=2 --root=$RPM_BUILD_ROOT
 
-install %{name}.desktop $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
-install %{name}-32.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
-
 # Scots unsupported by glibc
 rm -r $RPM_BUILD_ROOT/%{_datadir}/locale/sco
 
 %py_postclean
 %find_lang %{name}
+
+%post
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
+	%update_icon_cache hicolor
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -71,4 +73,4 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/picard
 %{py_sitedir}/%{name}-%{version}-py*.egg-info
 %{_desktopdir}/%{name}.desktop
-%{_pixmapsdir}/%{name}.png
+%{_iconsdir}/hicolor/*/apps/picard.png
