@@ -6,7 +6,7 @@ Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	0.12.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
@@ -18,6 +18,8 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
+Requires(post,postun):	gtk-update-icon-cache
+Requires(post,postun):	hicolor-icon-theme
 Requires:	python-PyQt4
 Requires:	python-musicbrainz2
 Requires:	python-tunepimp
@@ -59,9 +61,10 @@ rm -r $RPM_BUILD_ROOT/%{_datadir}/locale/sco
 %find_lang %{name}
 
 %post
-if [ -x /usr/bin/gtk-update-icon-cache ]; then
-	%update_icon_cache hicolor
-fi
+%update_icon_cache hicolor
+
+%postun
+%update_icon_cache hicolor
 
 %clean
 rm -rf $RPM_BUILD_ROOT
