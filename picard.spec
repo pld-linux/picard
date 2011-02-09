@@ -22,6 +22,7 @@ Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	python-PyQt4
 Requires:	python-musicbrainz2
+Requires:	python-mutagen
 Requires:	python-tunepimp
 Requires:	python-wxPython
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
