@@ -1,20 +1,19 @@
-# TODO:
-# - unpackaged files:
-#   /usr/share/icons/picard-16.png
-#   /usr/share/icons/picard-32.png
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	0.12.1
-Release:	3
+Version:	0.16
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	cfe594d68924afbc0704888130295c85
+# Source0-md5:	5791a5ae1ce92ac1ffb1cc8f15917ad7
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
+BuildRequires:	ffmpeg-devel
 BuildRequires:	gettext-devel
+BuildRequires:	libofa-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -47,7 +46,8 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %build
 find -type f -exec sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g' "{}" ";"
-python ./setup.py build
+python ./setup.py config
+python ./setup.py build 
 
 %install
 rm -rf $RPM_BUILD_ROOT
