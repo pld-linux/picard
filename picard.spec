@@ -44,16 +44,19 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %setup -q
 %patch0 -p1
 
+find -type f | xargs sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g'
+
 %build
-find -type f -exec sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g' "{}" ";"
-python ./setup.py config
-python ./setup.py build 
+%{__python} setup.py config
+%{__python} setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
-python ./setup.py install --optimize=2 --root=$RPM_BUILD_ROOT
+%{__python} setup.py install \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
 
 # Scots unsupported by glibc
 rm -r $RPM_BUILD_ROOT/%{_datadir}/locale/sco
