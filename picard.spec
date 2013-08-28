@@ -58,9 +58,6 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
 
-# Scots unsupported by glibc
-rm -r $RPM_BUILD_ROOT/%{_datadir}/locale/sco
-
 %py_postclean
 %find_lang %{name}
 
