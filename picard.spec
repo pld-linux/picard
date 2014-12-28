@@ -10,7 +10,7 @@ Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	ffmpeg-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libofa-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
