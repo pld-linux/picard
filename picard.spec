@@ -41,7 +41,7 @@ językiem cross-platform - co pozwala uruchamiać ten sam kod zarówno
 pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %prep
-%setup -q
+%setup -q -n %{name}-release-%{version}
 %patch0 -p1
 
 find -type f | xargs sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g'
