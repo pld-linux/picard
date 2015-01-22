@@ -9,9 +9,7 @@ Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar
 # Source0-md5:	2c155a0c4a5589c18bac3016365d7fbd
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
-BuildRequires:	ffmpeg-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libofa-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.5
