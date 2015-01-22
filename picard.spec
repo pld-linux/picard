@@ -62,6 +62,8 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 %py_postclean
 %find_lang %{name}
+%find_lang %{name}-countries -a %{name}.lang
+%find_lang %{name}-attributes -a %{name}.lang
 
 %post
 %update_icon_cache hicolor
