@@ -1,0 +1,34 @@
+From e53fb11e61021b5dea33165842abb93b4da28af5 Mon Sep 17 00:00:00 2001
+From: Philipp Wolfer <ph.wolfer@gmail.com>
+Date: Wed, 31 Dec 2014 13:33:01 +0100
+Subject: [PATCH] Fixed tags from filename dialog no opening on fresh install.
+
+An exception was thrown when tags_from_filenames_format was not set or empty.
+
+Fixes PICARD-681
+---
+ picard/ui/tagsfromfilenames.py | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/picard/ui/tagsfromfilenames.py b/picard/ui/tagsfromfilenames.py
+index 7d5ee4b..34bb3d4 100644
+--- a/picard/ui/tagsfromfilenames.py
++++ b/picard/ui/tagsfromfilenames.py
+@@ -49,10 +49,14 @@ def __init__(self, files, parent=None):
+             "%artist% - %album%/%tracknumber% - %title%",
+         ]
+         format = config.persist["tags_from_filenames_format"]
+-        if format and format not in items:
+-            items.insert(0, format)
++        if format not in items:
++            selected_index = 0
++            if format:
++                items.insert(0, format)
++        else:
++            selected_index = items.index(format)
+         self.ui.format.addItems(items)
+-        self.ui.format.setCurrentIndex(items.index(format))
++        self.ui.format.setCurrentIndex(selected_index)
+         self.ui.buttonbox.addButton(StandardButton(StandardButton.OK), QtGui.QDialogButtonBox.AcceptRole)
+         self.ui.buttonbox.addButton(StandardButton(StandardButton.CANCEL), QtGui.QDialogButtonBox.RejectRole)
+         self.ui.buttonbox.accepted.connect(self.accept)

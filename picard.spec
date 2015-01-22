@@ -8,6 +8,7 @@ Group:		Applications
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
 # Source0-md5:	2c155a0c4a5589c18bac3016365d7fbd
 Patch0:		%{name}-desktop.patch
+Patch1:		e53fb11e61021b5dea33165842abb93b4da28af5.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
@@ -41,6 +42,7 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %prep
 %setup -q -n %{name}-release-%{version}
 %patch0 -p1
+%patch1 -p1
 
 find -type f | xargs sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g'
 
