@@ -46,6 +46,8 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 find -type f | xargs sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g'
 
+%{__rm} po/sco.po
+
 %build
 %{__python} setup.py config
 %{__python} setup.py build
