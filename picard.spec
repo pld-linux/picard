@@ -55,6 +55,10 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 %py_install
 %py_postclean
+
+# install plugins
+cp -a contrib/plugins/* $RPM_BUILD_ROOT%{py_sitedir}/%{name}/plugins
+
 %find_lang %{name}
 %find_lang %{name}-countries -a %{name}.lang
 %find_lang %{name}-attributes -a %{name}.lang
@@ -70,7 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS.txt NEWS.txt
+%doc README.md AUTHORS.txt NEWS.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %dir %{py_sitedir}/%{name}
 %{py_sitedir}/%{name}/*.py*
