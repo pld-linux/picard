@@ -4,7 +4,7 @@ Name:		picard
 Version:	1.3.2
 Release:	1
 License:	GPL v2+
-Group:		Applications
+Group:		X11/Applications/Multimedia
 Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
 # Source0-md5:	0df8899ba834b2c9ac59165122256257
 Patch0:		%{name}-desktop.patch
@@ -12,9 +12,9 @@ URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.714
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	python-PyQt4
@@ -42,22 +42,18 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %setup -q -n %{name}-release-%{version}
 %patch0 -p1
 
-find -type f | xargs sed -i -e 's|#!.*python.*|#!%{_bindir}/python|g'
+find -type f | xargs sed -i -e '1 s|#!.*python|#!%{__python}|g'
 
 %{__rm} po/sco.po
 
 %build
-%{__python} setup.py config
-%{__python} setup.py build
+%py_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
-%{__python} setup.py install \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
-
+%py_install
 %py_postclean
 %find_lang %{name}
 %find_lang %{name}-countries -a %{name}.lang
@@ -76,7 +72,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.txt NEWS.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%{py_sitedir}/picard
+%dir %{py_sitedir}/%{name}
+%{py_sitedir}/%{name}/*.py*
+%{py_sitedir}/%{name}/browser
+%{py_sitedir}/%{name}/const
+%{py_sitedir}/%{name}/coverart
+%{py_sitedir}/%{name}/formats
+%{py_sitedir}/%{name}/plugins
+%{py_sitedir}/%{name}/ui
+%dir %{py_sitedir}/%{name}/util
+%{py_sitedir}/%{name}/util/*.py*
+%{py_sitedir}/%{name}/util/devutil
+%attr(755,root,root) %{py_sitedir}/%{name}/util/astrcmp.so
 %{py_sitedir}/%{name}-%{version}-py*.egg-info
 %{_desktopdir}/%{name}.desktop
 %{_iconsdir}/hicolor/*/apps/picard.png
