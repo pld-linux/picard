@@ -1,27 +1,28 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	1.3.2
+Version:	1.4.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
-Source0:	ftp://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	0df8899ba834b2c9ac59165122256257
+Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
+# Source0-md5:	5f3332e8c0f3280e11382a5b1f901409
 Patch0:		%{name}-desktop.patch
 URL:		http://musicbrainz.org/doc/PicardTagger
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 1:2.6
+BuildRequires:	python-PyQt4-uic
+BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
-Requires(post,postun):	hicolor-icon-theme
+Requires:	hicolor-icon-theme
 Requires:	python-PyQt4
-Requires:	python-musicbrainz2
+Requires:	python-libdiscid
+Requires:	python-modules >= 1:2.7
 Requires:	python-mutagen
-Requires:	python-tunepimp
-Requires:	python-wxPython
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,21 +57,20 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 %py_install
 %py_postclean
 
-# install plugins
-cp -a contrib/plugins/* $RPM_BUILD_ROOT%{py_sitedir}/%{name}/plugins
-
 %find_lang %{name}
 %find_lang %{name}-countries -a %{name}.lang
 %find_lang %{name}-attributes -a %{name}.lang
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
+%update_desktop_database
 %update_icon_cache hicolor
 
 %postun
+%update_desktop_database
 %update_icon_cache hicolor
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -91,3 +91,4 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/%{name}-%{version}-py*.egg-info
 %{_desktopdir}/%{name}.desktop
 %{_iconsdir}/hicolor/*/apps/picard.png
+%{_iconsdir}/hicolor/scalable/apps/picard.svg
