@@ -1,28 +1,29 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	1.4.1
+Version:	2.1.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	5f3332e8c0f3280e11382a5b1f901409
+# Source0-md5:	272b5ce221594eb1271d48d1c997499a
 Patch0:		%{name}-desktop.patch
-URL:		http://musicbrainz.org/doc/PicardTagger
+URL:		https://picard.musicbrainz.org/
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-PyQt4-uic
-BuildRequires:	python-devel >= 1:2.7
+BuildRequires:	python3-PyQt5-uic
+BuildRequires:	python3-babel >= 2.6
+BuildRequires:	python3-devel >= 1:3.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
-Requires:	python-PyQt4
-Requires:	python-libdiscid
-Requires:	python-modules >= 1:2.7
-Requires:	python-mutagen
+Requires:	python3-PyQt5 >= 5.7.1
+Requires:	python3-libdiscid
+Requires:	python3-modules >= 1:3.5
+Requires:	python3-mutagen >= 1.37
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,19 +44,18 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %setup -q -n %{name}-release-%{version}
 %patch0 -p1
 
-find -type f | xargs sed -i -e '1 s|#!.*python|#!%{__python}|g'
+sed -i -e '1 s|/usr/bin/env python3|%{__python3}|g' \
+	tagger.py scripts/picard.in
 
 %{__rm} po/sco.po
 
 %build
-%py_build
+%py3_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
-%py_install
-%py_postclean
+%py3_install
 
 %find_lang %{name}
 %find_lang %{name}-countries -a %{name}.lang
@@ -75,20 +75,24 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README.md AUTHORS.txt NEWS.txt
-%attr(755,root,root) %{_bindir}/%{name}
-%dir %{py_sitedir}/%{name}
-%{py_sitedir}/%{name}/*.py*
-%{py_sitedir}/%{name}/browser
-%{py_sitedir}/%{name}/const
-%{py_sitedir}/%{name}/coverart
-%{py_sitedir}/%{name}/formats
-%{py_sitedir}/%{name}/plugins
-%{py_sitedir}/%{name}/ui
-%dir %{py_sitedir}/%{name}/util
-%{py_sitedir}/%{name}/util/*.py*
-%{py_sitedir}/%{name}/util/devutil
-%attr(755,root,root) %{py_sitedir}/%{name}/util/astrcmp.so
-%{py_sitedir}/%{name}-%{version}-py*.egg-info
-%{_desktopdir}/%{name}.desktop
-%{_iconsdir}/hicolor/*/apps/picard.png
-%{_iconsdir}/hicolor/scalable/apps/picard.svg
+%attr(755,root,root) %{_bindir}/picard
+%dir %{py3_sitedir}/%{name}
+%{py3_sitedir}/%{name}/*.py
+%{py3_sitedir}/%{name}/__pycache__
+%{py3_sitedir}/%{name}/acoustid
+%{py3_sitedir}/%{name}/browser
+%{py3_sitedir}/%{name}/const
+%{py3_sitedir}/%{name}/coverart
+%{py3_sitedir}/%{name}/formats
+%{py3_sitedir}/%{name}/plugins
+%{py3_sitedir}/%{name}/ui
+%dir %{py3_sitedir}/%{name}/util
+%{py3_sitedir}/%{name}/util/*.py
+%attr(755,root,root) %{py3_sitedir}/%{name}/util/_astrcmp.cpython-*.so
+%{py3_sitedir}/%{name}/util/__pycache__
+%{py3_sitedir}/%{name}/webservice
+%{py3_sitedir}/%{name}-%{version}-py*.egg-info
+%{_datadir}/metainfo/org.musicbrainz.Picard.appdata.xml
+%{_desktopdir}/org.musicbrainz.Picard.desktop
+%{_iconsdir}/hicolor/*x*/apps/org.musicbrainz.Picard.png
+%{_iconsdir}/hicolor/scalable/apps/org.musicbrainz.Picard.svg
