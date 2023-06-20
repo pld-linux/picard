@@ -1,30 +1,29 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	2.1.3
-Release:	7
+Version:	2.8.5
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	272b5ce221594eb1271d48d1c997499a
+# Source0-md5:	7bea5a3963d27ed4d069ab7dd3ac3485
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-PyQt5-no-egg.patch
 URL:		https://picard.musicbrainz.org/
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3-PyQt5-uic
-BuildRequires:	python3-babel >= 2.6
-BuildRequires:	python3-devel >= 1:3.5
+BuildRequires:	python3-babel >= 2.9.1
+BuildRequires:	python3-devel >= 1:3.6
+BuildRequires:	python3-setuptools
+# PyInstaller >= 4.10?
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
-Requires:	python3-PyQt5 >= 5.7.1
 Requires:	python3-libdiscid
-Requires:	python3-modules >= 1:3.5
-Requires:	python3-mutagen >= 1.37
+Requires:	python3-modules >= 1:3.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,10 +43,9 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %prep
 %setup -q -n %{name}-release-%{version}
 %patch0 -p1
-%patch1 -p1
 
-sed -i -e '1 s|/usr/bin/env python3|%{__python3}|g' \
-	tagger.py scripts/picard.in
+%{__sed} -i -e '1 s|/usr/bin/env python3|%{__python3}|g' \
+	tagger.py.in scripts/picard.in
 
 # unify
 %{__mv} po/attributes/{pt_PT,pt}.po
@@ -62,9 +60,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_install
 
-%find_lang %{name}
-%find_lang %{name}-countries -a %{name}.lang
-%find_lang %{name}-attributes -a %{name}.lang
+%find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +75,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README.md AUTHORS.txt NEWS.txt
+%doc AUTHORS.txt NEWS.md README.md
 %attr(755,root,root) %{_bindir}/picard
 %dir %{py3_sitedir}/%{name}
 %{py3_sitedir}/%{name}/*.py
@@ -88,8 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/%{name}/browser
 %{py3_sitedir}/%{name}/const
 %{py3_sitedir}/%{name}/coverart
+%{py3_sitedir}/%{name}/disc
 %{py3_sitedir}/%{name}/formats
 %{py3_sitedir}/%{name}/plugins
+%{py3_sitedir}/%{name}/script
 %{py3_sitedir}/%{name}/ui
 %dir %{py3_sitedir}/%{name}/util
 %{py3_sitedir}/%{name}/util/*.py
