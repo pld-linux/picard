@@ -2,7 +2,7 @@ Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	2.8.5
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
@@ -47,10 +47,8 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 %{__sed} -i -e '1 s|/usr/bin/env python3|%{__python3}|g' \
 	tagger.py.in scripts/picard.in
 
-# unify
+# unify (only this file here, other picard domains already use "pt" name)
 %{__mv} po/attributes/{pt_PT,pt}.po
-# unsupported by glibc (as of 2.29)
-%{__rm} po/sco.po
 
 %build
 %py3_build
@@ -60,7 +58,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_install
 
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{es_419,ms_MY,zh-Hans,zh}
+# unify names
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{ms_MY,ms}
+# unsupported by glibc (as of 2.29)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{es_419,sco,zh-Hans,zh}
 
 %find_lang %{name} --all-name
 
