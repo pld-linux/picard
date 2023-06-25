@@ -2,7 +2,7 @@ Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	2.8.5
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
@@ -59,6 +59,8 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 rm -rf $RPM_BUILD_ROOT
 
 %py3_install
+
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{es_419,ms_MY,zh-Hans,zh}
 
 %find_lang %{name} --all-name
 
