@@ -1,13 +1,12 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	2.8.5
-Release:	4
+Version:	2.13.3
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
-Source0:	http://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	7bea5a3963d27ed4d069ab7dd3ac3485
-Patch0:		%{name}-desktop.patch
+Source0:	https://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
+# Source0-md5:	525d42abf04513ca264c6db23cecdc95
 URL:		https://picard.musicbrainz.org/
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
@@ -41,8 +40,7 @@ językiem cross-platform - co pozwala uruchamiać ten sam kod zarówno
 pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %prep
-%setup -q -n %{name}-release-%{version}
-%patch -P 0 -p1
+%setup -q
 
 %{__sed} -i -e '1 s|/usr/bin/env python3|%{__python3}|g' \
 	tagger.py.in scripts/picard.in
