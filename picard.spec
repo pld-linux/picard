@@ -2,7 +2,7 @@ Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
 Version:	2.13.3
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
@@ -56,8 +56,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_install
 
-# unify names
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/{ms_MY,ms}
+# where both variants exist, use the more complete versions
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/ms_MY/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/ms/LC_MESSAGES
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/nb_NO/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/nb/LC_MESSAGES
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/zh_Hans/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/zh_CN/LC_MESSAGES
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/zh_Hant/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/zh_TW/LC_MESSAGES
 # unsupported by glibc (as of 2.29)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{es_419,sco,zh-Hans,zh}
 
