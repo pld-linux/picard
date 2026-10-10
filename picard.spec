@@ -1,17 +1,17 @@
 Summary:	Picard, the Next-Generation MusicBrainz Tagger
 Summary(pl.UTF-8):	Picard - znaczniki MusicBrainz nowej generacji
 Name:		picard
-Version:	2.13.3
-Release:	2
+Version:	3.0.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://ftp.musicbrainz.org/pub/musicbrainz/picard/%{name}-%{version}.tar.gz
-# Source0-md5:	525d42abf04513ca264c6db23cecdc95
+# Source0-md5:	3c6fb6558d108986fd29998f5ba02496
 URL:		https://picard.musicbrainz.org/
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python3-PyQt5-uic
+BuildRequires:	python3-PyQt6-uic
 BuildRequires:	python3-babel >= 2.9.1
 BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	python3-setuptools
@@ -53,8 +53,11 @@ pod Windows jak i Linuksem. Niedługo zostanie dodana obsługa Mac OS X.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_localedir}
 
 %py3_install
+
+%{__mv} $RPM_BUILD_ROOT%{py3_sitedir}/%{name}/locale/* $RPM_BUILD_ROOT%{_localedir}
 
 # where both variants exist, use the more complete versions
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ms_MY/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/ms/LC_MESSAGES
@@ -63,6 +66,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/zh_Hant/LC_MESSAGES/*.mo $RPM_BUILD_ROOT%{_localedir}/zh_TW/LC_MESSAGES
 # unsupported by glibc (as of 2.29)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{es_419,sco,zh-Hans,zh}
+
+%{__rm} -r $RPM_BUILD_ROOT%{py3_sitedir}/%{name}/locale
+ln -sr $RPM_BUILD_ROOT%{_localedir} $RPM_BUILD_ROOT%{py3_sitedir}/%{name}/locale
 
 %find_lang %{name} --all-name
 
@@ -81,22 +87,33 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.txt NEWS.md README.md
 %attr(755,root,root) %{_bindir}/picard
+%attr(755,root,root) %{_bindir}/picard-cli
 %dir %{py3_sitedir}/%{name}
 %{py3_sitedir}/%{name}/*.py
 %{py3_sitedir}/%{name}/__pycache__
 %{py3_sitedir}/%{name}/acoustid
 %{py3_sitedir}/%{name}/browser
+%{py3_sitedir}/%{name}/cli
 %{py3_sitedir}/%{name}/const
 %{py3_sitedir}/%{name}/coverart
 %{py3_sitedir}/%{name}/disc
+%{py3_sitedir}/%{name}/extension_points
 %{py3_sitedir}/%{name}/formats
-%{py3_sitedir}/%{name}/plugins
+%{py3_sitedir}/%{name}/git
+%{py3_sitedir}/%{name}/i18n
+%{py3_sitedir}/%{name}/locale
+%{py3_sitedir}/%{name}/plugin3
+%{py3_sitedir}/%{name}/profiles
+%{py3_sitedir}/%{name}/remotecommands
 %{py3_sitedir}/%{name}/script
+%{py3_sitedir}/%{name}/session
+%{py3_sitedir}/%{name}/tags
 %{py3_sitedir}/%{name}/ui
 %dir %{py3_sitedir}/%{name}/util
 %{py3_sitedir}/%{name}/util/*.py
 %attr(755,root,root) %{py3_sitedir}/%{name}/util/_astrcmp.cpython-*.so
 %{py3_sitedir}/%{name}/util/__pycache__
+%{py3_sitedir}/%{name}/util/mbserver
 %{py3_sitedir}/%{name}/webservice
 %{py3_sitedir}/%{name}-%{version}-py*.egg-info
 %{_datadir}/metainfo/org.musicbrainz.Picard.appdata.xml
