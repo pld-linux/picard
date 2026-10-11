@@ -11,6 +11,7 @@ URL:		https://picard.musicbrainz.org/
 BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python3-PyQt6
 BuildRequires:	python3-PyQt6-uic
 BuildRequires:	python3-babel >= 2.9.1
 BuildRequires:	python3-devel >= 1:3.6
@@ -18,6 +19,8 @@ BuildRequires:	python3-setuptools
 # PyInstaller >= 4.10?
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+# Builds only a subset of .po files and breaks install
+BuildConflicts:	python3-setuptools-gettext
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
